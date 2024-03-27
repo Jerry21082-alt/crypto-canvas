@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { CATEGORIES } from "@/config";
+import { CATEGORIES } from "@/src/config";
 import Navitem from "./Navitem";
-import { clickOutside } from "@/hooks";
+import { clickOutside } from "@/src/hooks";
 
 const NavItems = () => {
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
@@ -19,7 +19,7 @@ const NavItems = () => {
 
     return document.removeEventListener("keydown", (e) => handler(e));
   }, []);
-  
+
   const isAnyOpen = activeIndex !== null;
 
   const containerRef = useRef<HTMLDivElement | null>(null);

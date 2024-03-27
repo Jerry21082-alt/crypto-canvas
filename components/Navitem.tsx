@@ -1,10 +1,10 @@
 "use client";
 
-import { CATEGORIES } from "@/config";
+import { CATEGORIES } from "@/src/config";
 import React from "react";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/src/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,66 +26,56 @@ const Navitem = ({
   return (
     <div className="flex">
       <div className="relative flex items-center">
-        <Button
-          className={`gap-1.5 ${isOpen ? "text-black" : "text-snow"}`}
-          onClick={handleOpen}
-          variant={isOpen ? "secondary" : "default"}
-        >
-          <ChevronDown
-            className={cn("h-4 w-4 transition-all text-muted-foregroun", {
-              "-rotate-180": isOpen,
-            })}
-          />
-          {category.label}
-        </Button>
+        <button type="button"className="Button" onClick={handleOpen}><span data-text={category.label}>{category.label}</span></button>
       </div>
 
-      {isOpen ? (
-        <div
-          className={cn(
-            "absolute inset-x-0 top-full text-sm text-muted-foreground",
-            {
-              "animate-in fade-in-10 slide-in-from-top-5": !isAnyOpen,
-            }
-          )}
-        >
-          <div className="absolute inset-0 top-1/2 bg-snow shadow">
-            <div className="relative bg-dimVoid">
-              <div className="mx-auto max-w-7xl px-8">
-                <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
-                  <div className="col-span-4 col-start-1 grid grid-cols-3 gap-x-8">
-                    {category.featured.map((feature, i) => (
-                      <div
-                        key={i}
-                        className="group relative text-base sm:text-sm"
-                      >
-                        <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                          <Image
-                            src={feature.image}
-                            alt="product image"
-                            fill
-                            className="object-cover object-center"
-                          />
-                        </div>
+      <div
+        className={cn(
+          "absolute inset-x-0 top-full text-sm text-muted-foreground",
+          {
+            "is-opened": isOpen,
+            "is-closed": !isOpen,
+          }
+        )}
+      >
+        <div className="absolute inset-0 top-1/2 bg-snow">
+          <div
+            className={`card-container relative bg-black rounded-b-xl`}
+          >
+            <div className="mx-auto max-w-7xl px-8">
+              <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
+                <div className="col-span-4 col-start-1 grid grid-cols-3 gap-x-8">
+                  {category.featured.map((feature, i) => (
+                    <div key={i} className="card relative text-base sm:text-sm">
+                      <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100">
+                        <div className="overlay" />
+
+                        <Image
+                          src={feature.image}
+                          alt="product image"
+                          fill
+                          className="card-img object-cover object-center"
+                        />
 
                         <Link
                           href={feature.href}
-                          className="mt-6 font-medium text-snow"
+                          className="card-link mt-6 font-medium text-snow absolute right-3 bottom-3 z-20"
                         >
                           {feature.name}
                         </Link>
-                        <p className="mt-1 text-skyBlue" aria-hidden="true">
-                          Shop now
-                        </p>
                       </div>
-                    ))}
-                  </div>
+
+                      <p className="card-p mt-1 text-white" aria-hidden="true">
+                        Shop now
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 };

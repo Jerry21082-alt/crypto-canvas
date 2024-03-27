@@ -1,35 +1,39 @@
-"use client";
-
 import React from "react";
 import WidthWrapper from "./WidthWrapper";
 import NavItems from "./NavItems";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
 import Cart from "./Cart";
+import { getServerSideUser } from "@/src/lib/payload-utils";
+import { cookies } from "next/headers";
+import UserMenu from "./UserMenu";
+import MobileNav from "./MobileNav";
 
-const NavBar = () => {
-  const user = null;
+const NavBar = async () => {
+  const nextCookies = cookies();
+  const { user } = await getServerSideUser(nextCookies);
 
   return (
-    <div className="bg-darkVoid sticky z-50 top-0 inset-x-0 h-16">
-      <header className="relative bg-darkVoid">
+    <div className="bg-black sticky z-50 top-0 inset-x-0 h-16 rounded-b-xl">
+      <header className="relative">
         <WidthWrapper>
           <div>
             <div className="flex h-16 items-center">
-              {/*todo */}
+              <MobileNav />
 
-              <div className="ml-4 flex lg:ml-0">Logo</div>
+              <div className="ml-4 flex lg:ml-0 text-snow">
+                <Link href="/">logo</Link>
+              </div>
 
               <div className="hidden z-50 lg:ml-8 lg:block lg:self-stretch">
                 <NavItems />
               </div>
 
-              <div className="ml-auto flex">
+              <div className="ml-auto flex relative">
                 <div className="hidden lg:flex lg:flex-1 lg:flex-center items-center lg:justify-end lg:space-x-6 text-snow">
                   {user ? null : (
                     <Link
-                      href="/sing-in"
+                      href="/sign-in"
                       className={buttonVariants({
                         variant: "ghost",
                       })}
@@ -38,12 +42,8 @@ const NavBar = () => {
                     </Link>
                   )}
 
-                  {user ? null : (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  )}
-
                   {user ? (
-                    <p></p>
+                    <UserMenu user={user} />
                   ) : (
                     <Link
                       href="/sign-up"
@@ -51,19 +51,6 @@ const NavBar = () => {
                     >
                       Sign up
                     </Link>
-                  )}
-
-                  {user ? (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  ) : null}
-
-                  {user ? null : (
-                    <div className="flex lg:ml-6">
-                      <span
-                        className="h-6 w-px bg-gray-200"
-                        aria-hidden="true"
-                      />
-                    </div>
                   )}
 
                   <div className="ml-4 flow-root lg:ml-6">

@@ -19,8 +19,9 @@ const config = {
     },
     extend: {
       colors: {
-        darkVoid: "#081041",
-        dimVoid: "#040a2f",
+        darkVoid: "#0a0908",
+        dimVoid: "#9d0208",
+        darkScreen: "#0c0603",
         skyBlue: "#0064fb",
         snow: "rgb(251, 251, 251)",
         liquidLava: "#1b266b",

@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
+import { cn } from "@/src/lib/utils";
 
 const WidthWrapper = ({
   className,
